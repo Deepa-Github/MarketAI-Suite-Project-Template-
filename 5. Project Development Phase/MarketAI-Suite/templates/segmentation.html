@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}Audience Segmentation — MarketAI Suite{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">👥 Audience Segmentation</h1>
+        <p class="page-subtitle">Discover your key customer segments with AI-powered analysis</p>
+    </div>
+</div>
+<div class="container">
+    <div class="two-col-layout">
+        <div class="form-panel">
+            <form id="segmentationForm">
+                <div class="form-section">
+                    <h3 class="form-section-title">Business Context</h3>
+                    <div class="form-group">
+                        <label for="business_description">Business / Product Description <span class="required">*</span></label>
+                        <textarea id="business_description" name="business_description" rows="3" placeholder="Describe your business, products, or services..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="target_market">Target Market <span class="required">*</span></label>
+                        <input type="text" id="target_market" name="target_market" placeholder="e.g. B2B SaaS companies, Small businesses" required>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3 class="form-section-title">Audience Data (optional — more data = better segments)</h3>
+                    <div class="form-row">
+                        <div class="form-group"><label for="demographics">Demographics</label><input type="text" id="demographics" name="demographics" placeholder="Age, gender, income level"></div>
+                        <div class="form-group"><label for="age_range">Age Range</label><input type="text" id="age_range" name="age_range" placeholder="e.g. 25-45"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label for="location">Location</label><input type="text" id="location" name="location" placeholder="Country, region, city"></div>
+                        <div class="form-group"><label for="industry">Industry</label><input type="text" id="industry" name="industry" placeholder="Technology, Healthcare..."></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label for="job_roles">Job Roles</label><input type="text" id="job_roles" name="job_roles" placeholder="CEO, Marketing Manager..."></div>
+                        <div class="form-group"><label for="company_size">Company Size</label><input type="text" id="company_size" name="company_size" placeholder="SMB, Enterprise"></div>
+                    </div>
+                    <div class="form-group"><label for="purchase_history">Purchase History</label><textarea id="purchase_history" name="purchase_history" rows="2" placeholder="Describe typical purchase patterns..."></textarea></div>
+                    <div class="form-group"><label for="interests">Interests</label><input type="text" id="interests" name="interests" placeholder="Technology, business growth, efficiency"></div>
+                    <div class="form-group"><label for="pain_points">Pain Points</label><textarea id="pain_points" name="pain_points" rows="2" placeholder="What challenges does your audience face?"></textarea></div>
+                    <div class="form-group"><label for="engagement_behavior">Engagement Behaviour</label><input type="text" id="engagement_behavior" name="engagement_behavior" placeholder="Social media active, email-responsive..."></div>
+                    <div class="form-row">
+                        <div class="form-group"><label for="product_usage">Product Usage Patterns</label><input type="text" id="product_usage" name="product_usage" placeholder="Power users, occasional users..."></div>
+                        <div class="form-group"><label for="purchase_intent">Purchase Intent Signals</label><input type="text" id="purchase_intent" name="purchase_intent" placeholder="Demo requests, trial sign-ups..."></div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-full" id="segmentBtn">
+                        <span class="btn-text">✨ Generate Segments</span>
+                        <span class="btn-loading hidden">⏳ Generating...</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="results-panel" id="resultsPanel">
+            <div class="results-placeholder" id="resultsPlaceholder">
+                <div class="placeholder-icon">👥</div>
+                <h3>Audience Segments Will Appear Here</h3>
+                <p>Provide your business context and audience data to generate detailed customer segments.</p>
+            </div>
+            <div class="ai-loading hidden" id="loadingState">
+                <div class="ai-loading-spinner"></div>
+                <div class="ai-loading-messages" id="loadingMessages"></div>
+            </div>
+            <div class="segmentation-result hidden" id="segmentationResult">
+                <div class="result-header">
+                    <h2>Audience Segments</h2>
+                    <span class="history-badge" id="sourceLabel">Generated from AI</span>
+                </div>
+                <div id="segmentsContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/segmentation.js') }}"></script>
+{% endblock %}

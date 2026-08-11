@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}History — MarketAI Suite{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">🕐 Generation History</h1>
+        <p class="page-subtitle">Browse, search, and reload your previous AI generations — no new API calls needed</p>
+    </div>
+</div>
+<div class="container">
+    <!-- Filters -->
+    <div class="history-filters">
+        <input type="text" id="historySearch" placeholder="🔍 Search by title or content..." class="search-input">
+        <select id="typeFilter" class="filter-select">
+            <option value="">All Types</option>
+            <option value="campaign">🎯 Campaigns</option>
+            <option value="sales_pitch">💼 Sales Pitches</option>
+            <option value="lead_scoring">📈 Lead Scoring</option>
+            <option value="segmentation">👥 Segmentation</option>
+            <option value="strategy">🗺️ Strategies</option>
+            <option value="recommendation">⚡ Recommendations</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" id="refreshHistoryBtn">🔄 Refresh</button>
+    </div>
+
+    <!-- History Cards -->
+    <div id="historyContainer">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="historyPagination"></div>
+
+    <!-- History Item Detail Modal -->
+    <div class="modal-overlay hidden" id="historyModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">History Item</h3>
+                <div class="modal-badges">
+                    <span class="history-badge from-history">📚 Loaded from History</span>
+                    <span class="history-badge" id="modalTypeBadge"></span>
+                </div>
+                <button class="modal-close" onclick="closeHistoryModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="loading-spinner"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modalReuseBtn">🔄 Regenerate with Same Inputs</button>
+                <button class="btn btn-ghost" onclick="closeHistoryModal()">Close</button>
+                <button class="btn btn-danger btn-sm" id="modalDeleteBtn">🗑️ Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}

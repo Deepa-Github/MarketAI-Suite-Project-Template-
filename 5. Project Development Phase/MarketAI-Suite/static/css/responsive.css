@@ -1,0 +1,41 @@
+/* Responsive styles for MarketAI Suite */
+
+@media (max-width: 1024px) {
+  .two-col-layout { grid-template-columns: 1fr; }
+  .results-panel { position: static; max-height: none; }
+  .hero-section { grid-template-columns: 1fr; padding: var(--space-10) var(--space-6); text-align: center; }
+  .hero-description { margin: 0 auto var(--space-8); }
+  .hero-actions { justify-content: center; }
+  .hero-card-grid { grid-template-columns: repeat(3, 1fr); }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .charts-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    background: var(--bg-nav);
+    flex-direction: column;
+    padding: var(--space-4);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    box-shadow: var(--shadow-xl);
+  }
+  .nav-links.open { display: flex; }
+  .nav-toggle { display: flex; }
+  .form-row { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .hero-card-grid { grid-template-columns: repeat(2, 1fr); }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .segment-body { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .hero-card-grid { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: 1fr; }
+  .history-grid { grid-template-columns: 1fr; }
+  .settings-grid, .reports-grid { grid-template-columns: 1fr; }
+}

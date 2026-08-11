@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard — MarketAI Suite{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">📊 Dashboard</h1>
+        <p class="page-subtitle">Your marketing intelligence at a glance</p>
+    </div>
+</div>
+<div class="container">
+    <!-- Metrics Row -->
+    <div class="metrics-grid" id="metricsGrid">
+        <div class="metric-card loading-skeleton" id="metricCampaigns">
+            <div class="metric-icon">🎯</div>
+            <div class="metric-value" id="totalCampaigns">—</div>
+            <div class="metric-label">Campaigns Generated</div>
+        </div>
+        <div class="metric-card loading-skeleton" id="metricPitches">
+            <div class="metric-icon">💼</div>
+            <div class="metric-value" id="totalPitches">—</div>
+            <div class="metric-label">Sales Pitches</div>
+        </div>
+        <div class="metric-card loading-skeleton" id="metricLeads">
+            <div class="metric-icon">📋</div>
+            <div class="metric-value" id="totalLeads">—</div>
+            <div class="metric-label">Total Leads Scored</div>
+        </div>
+        <div class="metric-card loading-skeleton high-priority" id="metricHighLeads">
+            <div class="metric-icon">🔥</div>
+            <div class="metric-value" id="highPriorityLeads">—</div>
+            <div class="metric-label">High Priority Leads</div>
+        </div>
+        <div class="metric-card loading-skeleton medium-priority" id="metricMediumLeads">
+            <div class="metric-icon">⚡</div>
+            <div class="metric-value" id="mediumPriorityLeads">—</div>
+            <div class="metric-label">Medium Priority Leads</div>
+        </div>
+        <div class="metric-card loading-skeleton" id="metricAvgScore">
+            <div class="metric-icon">📊</div>
+            <div class="metric-value" id="avgLeadScore">—</div>
+            <div class="metric-label">Avg AI Lead Score</div>
+        </div>
+        <div class="metric-card loading-skeleton" id="metricSegments">
+            <div class="metric-icon">👥</div>
+            <div class="metric-value" id="totalSegments">—</div>
+            <div class="metric-label">Segmentations</div>
+        </div>
+        <div class="metric-card loading-skeleton" id="metricStrategies">
+            <div class="metric-icon">🗺️</div>
+            <div class="metric-value" id="totalStrategies">—</div>
+            <div class="metric-label">Strategies Built</div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+        <div class="chart-card">
+            <h3>Lead Priority Distribution</h3>
+            <div class="chart-container" id="priorityChart"></div>
+        </div>
+        <div class="chart-card">
+            <h3>AI Activity Overview</h3>
+            <div class="chart-container" id="activityChart"></div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="section-card">
+        <div class="section-card-header">
+            <h3>Recent Activity</h3>
+            <a href="/history" class="btn btn-ghost btn-sm">View All →</a>
+        </div>
+        <div id="recentActivity" class="activity-list">
+            <div class="loading-spinner-sm"></div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <h3>Quick Actions</h3>
+        <div class="quick-actions-grid">
+            <a href="/campaign" class="quick-action-btn">🎯 New Campaign</a>
+            <a href="/sales-pitch" class="quick-action-btn">💼 New Sales Pitch</a>
+            <a href="/lead-scoring" class="quick-action-btn">📈 Score Leads</a>
+            <a href="/segmentation" class="quick-action-btn">👥 Segment Audience</a>
+            <a href="/strategy" class="quick-action-btn">🗺️ Build Strategy</a>
+            <a href="/history" class="quick-action-btn">🕐 View History</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

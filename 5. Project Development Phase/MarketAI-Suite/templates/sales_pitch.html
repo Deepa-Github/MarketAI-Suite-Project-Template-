@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}AI Sales Pitch Generator — MarketAI Suite{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">💼 AI Sales Pitch Generator</h1>
+        <p class="page-subtitle">Create persuasive, customer-specific sales pitches powered by AI</p>
+    </div>
+</div>
+<div class="container">
+    <div class="two-col-layout">
+        <div class="form-panel">
+            <form id="salesPitchForm">
+                <div class="form-section">
+                    <h3 class="form-section-title">Product / Solution</h3>
+                    <div class="form-group">
+                        <label for="product_name">Product / Service Name <span class="required">*</span></label>
+                        <input type="text" id="product_name" name="product_name" placeholder="e.g. Enterprise Analytics Platform" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product_description">Product Description <span class="required">*</span></label>
+                        <textarea id="product_description" name="product_description" rows="3" placeholder="Describe what your product/service does and how it works..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="unique_selling_points">Unique Selling Points</label>
+                        <textarea id="unique_selling_points" name="unique_selling_points" rows="2" placeholder="What makes this product uniquely valuable?"></textarea>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3 class="form-section-title">Customer Information</h3>
+                    <div class="form-group">
+                        <label for="customer_name">Customer / Company Name <span class="required">*</span></label>
+                        <input type="text" id="customer_name" name="customer_name" placeholder="e.g. Acme Corporation" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customer_industry">Industry <span class="required">*</span></label>
+                            <input type="text" id="customer_industry" name="customer_industry" placeholder="e.g. Financial Services" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer_role">Decision Maker Role</label>
+                            <input type="text" id="customer_role" name="customer_role" placeholder="e.g. VP of Operations">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="business_challenges">Business Challenges</label>
+                        <textarea id="business_challenges" name="business_challenges" rows="2" placeholder="What business challenges is this customer facing?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="pain_points">Key Pain Points <span class="required">*</span></label>
+                        <textarea id="pain_points" name="pain_points" rows="2" placeholder="What specific pain points can your product solve for this customer?" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer_goals">Customer Goals</label>
+                        <textarea id="customer_goals" name="customer_goals" rows="2" placeholder="What are the customer's main business goals?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="competitors">Competitors in Consideration</label>
+                        <input type="text" id="competitors" name="competitors" placeholder="e.g. Salesforce, HubSpot">
+                    </div>
+                    <div class="form-group">
+                        <label for="desired_outcome">Desired Outcome</label>
+                        <input type="text" id="desired_outcome" name="desired_outcome" placeholder="What outcome do you want from this pitch?">
+                    </div>
+                    <div class="form-group">
+                        <label for="sales_tone">Sales Tone</label>
+                        <select id="sales_tone" name="sales_tone">
+                            <option value="Professional and consultative">Professional &amp; Consultative</option>
+                            <option value="Confident and assertive">Confident &amp; Assertive</option>
+                            <option value="Friendly and collaborative">Friendly &amp; Collaborative</option>
+                            <option value="Data-driven and analytical">Data-Driven &amp; Analytical</option>
+                            <option value="Urgency-focused">Urgency-Focused</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-full" id="generatePitchBtn">
+                        <span class="btn-text">✨ Generate Sales Pitch</span>
+                        <span class="btn-loading hidden">⏳ Generating...</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="results-panel" id="resultsPanel">
+            <div class="results-placeholder" id="resultsPlaceholder">
+                <div class="placeholder-icon">💼</div>
+                <h3>Your Sales Pitch Will Appear Here</h3>
+                <p>Fill in the customer and product details, then click Generate.</p>
+            </div>
+            <div class="ai-loading hidden" id="loadingState">
+                <div class="ai-loading-spinner"></div>
+                <div class="ai-loading-messages" id="loadingMessages"></div>
+            </div>
+            <div class="pitch-result hidden" id="pitchResult">
+                <div class="result-header">
+                    <div>
+                        <h2>Sales Pitch</h2>
+                        <span class="history-badge" id="sourceBadge">Generated from AI</span>
+                    </div>
+                    <div class="result-actions">
+                        <button class="btn btn-ghost btn-sm" onclick="copyPitchResult()">📋 Copy All</button>
+                        <button class="btn btn-secondary btn-sm" onclick="regeneratePitch()">🔄 Regenerate</button>
+                    </div>
+                </div>
+                <div id="pitchContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/sales_pitch.js') }}"></script>
+{% endblock %}

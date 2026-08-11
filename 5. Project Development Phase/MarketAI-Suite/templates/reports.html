@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Reports & Exports — MarketAI Suite{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">📋 Reports &amp; Exports</h1>
+        <p class="page-subtitle">Export your AI-generated analyses and lead data</p>
+    </div>
+</div>
+<div class="container">
+    <div class="reports-grid">
+        <div class="report-card">
+            <div class="report-icon">📊</div>
+            <h3>Lead Analysis Export</h3>
+            <p>Export your most recent lead scoring session as a CSV file with all scores, priorities, and AI recommendations.</p>
+            <div id="leadExports"><div class="loading-spinner-sm"></div></div>
+        </div>
+        <div class="report-card">
+            <div class="report-icon">📑</div>
+            <h3>Campaign History Export</h3>
+            <p>Download a summary of all your generated campaigns.</p>
+            <button class="btn btn-secondary" onclick="exportHistoryCSV('campaign')">📥 Export Campaigns CSV</button>
+        </div>
+        <div class="report-card">
+            <div class="report-icon">💼</div>
+            <h3>Sales Pitch History Export</h3>
+            <p>Download a summary of all your generated sales pitches.</p>
+            <button class="btn btn-secondary" onclick="exportHistoryCSV('sales_pitch')">📥 Export Sales Pitches CSV</button>
+        </div>
+        <div class="report-card">
+            <div class="report-icon">📈</div>
+            <h3>Full History Export</h3>
+            <p>Export a complete summary of all your AI generations.</p>
+            <button class="btn btn-secondary" onclick="exportHistoryCSV()">📥 Export Full History CSV</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+async function exportHistoryCSV(type) {
+    let url = '/api/history?per_page=1000';
+    if (type) url += '&type=' + type;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    const items = data.data?.items || [];
+    if (!items.length) { showToast('No data to export', 'warning'); return; }
+    const headers = ['id','generation_type','title','status','created_at'];
+    const csv = [headers.join(','), ...items.map(r => headers.map(h => '"' + String(r[h] || '').replace(/"/g,'""') + '"').join(','))].join('\n');
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (type || 'full') + '_history.csv';
+    a.click();
+    showToast('Export downloaded', 'success');
+}
+async function loadLeadExports() {
+    const resp = await fetch('/api/leads?per_page=10');
+    const data = await resp.json();
+    const el = document.getElementById('leadExports');
+    const items = data.data?.items || [];
+    if (!items.length) { el.innerHTML = '<p class="muted">No lead analyses found. <a href="/lead-scoring">Score some leads first.</a></p>'; return; }
+    el.innerHTML = items.slice(0,5).map(item => `<div class="export-item"><span>${item.title}</span><a href="/api/leads/${item.id}/export" class="btn btn-ghost btn-sm">📥 CSV</a></div>`).join('');
+}
+loadLeadExports();
+</script>
+{% endblock %}

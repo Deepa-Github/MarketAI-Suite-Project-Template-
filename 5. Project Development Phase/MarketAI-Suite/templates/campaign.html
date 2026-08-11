@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% block title %}AI Campaign Generator — MarketAI Suite{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">🎯 AI Campaign Generator</h1>
+        <p class="page-subtitle">Generate a complete, production-ready marketing campaign powered by AI</p>
+    </div>
+</div>
+<div class="container">
+    <div class="two-col-layout">
+        <!-- Input Form -->
+        <div class="form-panel" id="campaignForm">
+            <form id="campaignInputForm">
+                <div class="form-section">
+                    <h3 class="form-section-title">Product Information</h3>
+                    <div class="form-group">
+                        <label for="product_name">Product / Service Name <span class="required">*</span></label>
+                        <input type="text" id="product_name" name="product_name" placeholder="e.g. SmartWatch Pro X" required maxlength="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="product_description">Product Description <span class="required">*</span></label>
+                        <textarea id="product_description" name="product_description" rows="3" placeholder="Describe your product or service in detail..." required maxlength="2000"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="key_features">Key Features</label>
+                        <textarea id="key_features" name="key_features" rows="2" placeholder="List the main features (one per line)..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="benefits">Key Benefits</label>
+                        <textarea id="benefits" name="benefits" rows="2" placeholder="What benefits does your product deliver?"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="form-section-title">Target Audience</h3>
+                    <div class="form-group">
+                        <label for="target_audience">Primary Target Audience <span class="required">*</span></label>
+                        <input type="text" id="target_audience" name="target_audience" placeholder="e.g. Young professionals aged 25-35" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="age_range">Age Range</label>
+                            <input type="text" id="age_range" name="age_range" placeholder="e.g. 25-40">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location / Market</label>
+                            <input type="text" id="location" name="location" placeholder="e.g. US, UK, Global">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="industry">Industry / Sector</label>
+                            <input type="text" id="industry" name="industry" placeholder="e.g. Technology, Healthcare">
+                        </div>
+                        <div class="form-group">
+                            <label for="brand_tone">Brand Tone</label>
+                            <select id="brand_tone" name="brand_tone">
+                                <option value="Professional">Professional</option>
+                                <option value="Friendly and Approachable">Friendly &amp; Approachable</option>
+                                <option value="Bold and Energetic">Bold &amp; Energetic</option>
+                                <option value="Inspirational">Inspirational</option>
+                                <option value="Authoritative">Authoritative</option>
+                                <option value="Playful">Playful</option>
+                                <option value="Minimalist">Minimalist</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pain_points">Customer Pain Points</label>
+                        <textarea id="pain_points" name="pain_points" rows="2" placeholder="What problems does your target audience face?"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="form-section-title">Campaign Parameters</h3>
+                    <div class="form-group">
+                        <label for="campaign_objective">Campaign Objective <span class="required">*</span></label>
+                        <select id="campaign_objective" name="campaign_objective" required>
+                            <option value="">Select objective...</option>
+                            <option value="Brand Awareness">Brand Awareness</option>
+                            <option value="Lead Generation">Lead Generation</option>
+                            <option value="Product Launch">Product Launch</option>
+                            <option value="Increase Online Sales">Increase Online Sales</option>
+                            <option value="Customer Retention">Customer Retention</option>
+                            <option value="Market Expansion">Market Expansion</option>
+                            <option value="Thought Leadership">Thought Leadership</option>
+                            <option value="Event Promotion">Event Promotion</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Marketing Channels</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="Instagram"> Instagram</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="LinkedIn"> LinkedIn</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="Facebook"> Facebook</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="Twitter/X"> Twitter/X</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="YouTube"> YouTube</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="TikTok"> TikTok</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="Email Marketing"> Email</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="Google Ads"> Google Ads</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="Content Marketing"> Content</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="SEO"> SEO</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="Podcast"> Podcast</label>
+                            <label class="checkbox-item"><input type="checkbox" name="channels" value="Influencer Marketing"> Influencer</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="campaign_duration">Campaign Duration</label>
+                            <input type="text" id="campaign_duration" name="campaign_duration" placeholder="e.g. 3 months">
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Budget (optional)</label>
+                            <input type="text" id="budget" name="budget" placeholder="e.g. $50,000">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="competitors">Competitors (optional)</label>
+                        <input type="text" id="competitors" name="competitors" placeholder="e.g. Apple Watch, Fitbit">
+                    </div>
+                    <div class="form-group">
+                        <label for="additional_requirements">Additional Requirements (optional)</label>
+                        <textarea id="additional_requirements" name="additional_requirements" rows="2" placeholder="Any specific requirements or constraints..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-full" id="generateBtn">
+                        <span class="btn-text">✨ Generate Campaign</span>
+                        <span class="btn-loading hidden">⏳ Generating...</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="resultsPanel">
+            <div class="results-placeholder" id="resultsPlaceholder">
+                <div class="placeholder-icon">🎯</div>
+                <h3>Your Campaign Will Appear Here</h3>
+                <p>Fill in the form and click "Generate Campaign" to create your AI-powered marketing campaign.</p>
+            </div>
+
+            <!-- Loading State -->
+            <div class="ai-loading hidden" id="loadingState">
+                <div class="ai-loading-spinner"></div>
+                <div class="ai-loading-messages" id="loadingMessages"></div>
+            </div>
+
+            <!-- Campaign Result -->
+            <div class="campaign-result hidden" id="campaignResult">
+                <div class="result-header">
+                    <div>
+                        <h2 id="resultCampaignName">Campaign Name</h2>
+                        <span class="history-badge" id="sourceBadge">Generated from AI</span>
+                    </div>
+                    <div class="result-actions">
+                        <button class="btn btn-ghost btn-sm" onclick="copyCampaignResult()">📋 Copy All</button>
+                        <button class="btn btn-secondary btn-sm" onclick="regenerateCampaign()">🔄 Regenerate</button>
+                    </div>
+                </div>
+                <div id="campaignContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/campaign.js') }}"></script>
+{% endblock %}

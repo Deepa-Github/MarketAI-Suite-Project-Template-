@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %}Settings — MarketAI Suite{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">⚙️ Settings</h1>
+        <p class="page-subtitle">Application configuration and AI model settings</p>
+    </div>
+</div>
+<div class="container">
+    <div class="settings-grid">
+        <div class="settings-card">
+            <h3>🤖 AI Configuration</h3>
+            <div class="setting-item">
+                <div class="setting-label">AI Provider</div>
+                <div class="setting-value">Groq API</div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">AI Model</div>
+                <div class="setting-value" id="aiModel">Loading...</div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">API Key Status</div>
+                <div class="setting-value" id="apiKeyStatus">Checking...</div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">Max Tokens</div>
+                <div class="setting-value" id="maxTokens">—</div>
+            </div>
+            <p class="setting-note">⚠️ To change the AI model, update <code>GROQ_MODEL</code> in your <code>.env</code> file and restart the server. The API key is never displayed here for security.</p>
+        </div>
+        <div class="settings-card">
+            <h3>🏗️ Application</h3>
+            <div class="setting-item">
+                <div class="setting-label">Service Name</div>
+                <div class="setting-value">MarketAI Suite</div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">Version</div>
+                <div class="setting-value">1.0.0</div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">Database</div>
+                <div class="setting-value" id="dbStatus">Checking...</div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">Environment</div>
+                <div class="setting-value" id="appEnv">—</div>
+            </div>
+        </div>
+        <div class="settings-card">
+            <h3>📋 CSV Format Reference</h3>
+            <p>Required columns for lead CSV uploads:</p>
+            <div class="code-block">name, email, company</div>
+            <p>Optional columns:</p>
+            <div class="code-block">industry, job_title, company_size, location, engagement_score, website_visits, email_opens, email_clicks, content_downloads, demo_request, purchase_intent, previous_purchases, budget, lead_source, campaign</div>
+            <a href="#" class="btn btn-ghost btn-sm" onclick="downloadSampleCSV(); return false;">📥 Download Sample CSV</a>
+        </div>
+        <div class="settings-card">
+            <h3>🔒 Security Notes</h3>
+            <ul class="security-list">
+                <li>✅ GROQ_API_KEY is stored server-side only</li>
+                <li>✅ API key is never sent to the browser</li>
+                <li>✅ All AI calls go through the Flask backend</li>
+                <li>✅ CSV uploads are validated and size-limited</li>
+                <li>✅ All SQL uses parameterised queries</li>
+                <li>✅ Inputs are sanitised before processing</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+async function loadSettings() {
+    try {
+        const resp = await fetch('/api/health');
+        const data = await resp.json();
+        document.getElementById('aiModel').textContent = data.ai_service?.model || 'Unknown';
+        document.getElementById('apiKeyStatus').textContent = data.ai_service?.configured ? '✅ Configured' : '❌ Not configured — check .env';
+        document.getElementById('apiKeyStatus').className = data.ai_service?.configured ? 'setting-value success' : 'setting-value error';
+        document.getElementById('dbStatus').textContent = data.database?.status === 'healthy' ? '✅ Healthy' : '⚠️ ' + (data.database?.error || 'Unknown');
+        document.getElementById('maxTokens').textContent = data.ai_service?.max_tokens || '—';
+        document.getElementById('appEnv').textContent = 'Development';
+    } catch(e) { console.error(e); }
+}
+function downloadSampleCSV() {
+    const csv = 'name,email,company,industry,job_title,company_size,location,engagement_score,website_visits,email_opens,email_clicks,content_downloads,demo_request,purchase_intent,previous_purchases,budget,lead_source,campaign\nJohn Smith,john@acme.com,Acme Corp,Technology,VP of Sales,500-1000,New York,75,12,8,4,3,Yes,High,No,$50000,LinkedIn,Q4 Campaign\nJane Doe,jane@startup.io,StartupIO,SaaS,CEO,10-50,San Francisco,45,5,3,1,1,No,Medium,No,Unknown,Website,Brand Campaign';
+    const blob = new Blob([csv], {type:'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'sample_leads.csv';
+    a.click();
+}
+loadSettings();
+</script>
+{% endblock %}

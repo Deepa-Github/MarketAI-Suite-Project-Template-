@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block title %}Lead Scoring — MarketAI Suite{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1 class="page-title">📈 AI Lead Scoring Engine</h1>
+        <p class="page-subtitle">Score, prioritise, and analyse your leads using AI + deterministic rules</p>
+    </div>
+</div>
+<div class="container">
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+        <button class="tab-btn active" data-tab="csvUpload" id="tabCsv">📁 Upload CSV</button>
+        <button class="tab-btn" data-tab="manualEntry" id="tabManual">✏️ Enter Lead Manually</button>
+    </div>
+
+    <!-- CSV Upload Tab -->
+    <div class="tab-content active" id="csvUpload">
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon">📂</div>
+            <h3>Drop your CSV file here</h3>
+            <p>or <label for="csvFile" class="upload-browse">browse to upload</label></p>
+            <input type="file" id="csvFile" name="file" accept=".csv" hidden>
+            <p class="upload-hint">CSV must include: name, email, company columns. Max 10MB.</p>
+        </div>
+        <div class="csv-info">
+            <details>
+                <summary>📋 Expected CSV Format</summary>
+                <div class="csv-format-table">
+                    <p>Required: <code>name</code>, <code>email</code>, <code>company</code></p>
+                    <p>Optional: <code>industry</code>, <code>job_title</code>, <code>company_size</code>, <code>location</code>, <code>engagement_score</code>, <code>website_visits</code>, <code>email_opens</code>, <code>email_clicks</code>, <code>content_downloads</code>, <code>demo_request</code>, <code>purchase_intent</code>, <code>previous_purchases</code>, <code>budget</code>, <code>lead_source</code>, <code>campaign</code></p>
+                </div>
+            </details>
+        </div>
+        <button class="btn btn-primary btn-lg" id="uploadBtn" disabled>
+            <span class="btn-text">📊 Score Leads</span>
+            <span class="btn-loading hidden">⏳ Scoring leads...</span>
+        </button>
+    </div>
+
+    <!-- Manual Entry Tab -->
+    <div class="tab-content" id="manualEntry">
+        <form id="manualLeadForm" class="form-grid">
+            <div class="form-section">
+                <h3 class="form-section-title">Lead Information</h3>
+                <div class="form-row">
+                    <div class="form-group"><label for="lead_name">Name <span class="required">*</span></label><input type="text" id="lead_name" name="name" placeholder="John Smith" required></div>
+                    <div class="form-group"><label for="lead_email">Email <span class="required">*</span></label><input type="email" id="lead_email" name="email" placeholder="john@company.com" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="lead_company">Company <span class="required">*</span></label><input type="text" id="lead_company" name="company" placeholder="Acme Corp" required></div>
+                    <div class="form-group"><label for="lead_industry">Industry</label><input type="text" id="lead_industry" name="industry" placeholder="Technology"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="lead_role">Job Title</label><input type="text" id="lead_role" name="job_title" placeholder="VP of Sales"></div>
+                    <div class="form-group"><label for="lead_company_size">Company Size</label><input type="text" id="lead_company_size" name="company_size" placeholder="500-1000 employees"></div>
+                </div>
+            </div>
+            <div class="form-section">
+                <h3 class="form-section-title">Engagement &amp; Intent</h3>
+                <div class="form-row">
+                    <div class="form-group"><label for="engagement_score">Engagement Score (0-100)</label><input type="number" id="engagement_score" name="engagement_score" min="0" max="100" placeholder="65"></div>
+                    <div class="form-group"><label for="website_visits">Website Visits</label><input type="number" id="website_visits" name="website_visits" min="0" placeholder="12"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="email_opens">Email Opens</label><input type="number" id="email_opens" name="email_opens" min="0" placeholder="5"></div>
+                    <div class="form-group"><label for="email_clicks">Email Clicks</label><input type="number" id="email_clicks" name="email_clicks" min="0" placeholder="3"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="content_downloads">Content Downloads</label><input type="number" id="content_downloads" name="content_downloads" min="0" placeholder="2"></div>
+                    <div class="form-group"><label for="demo_request">Demo Requested?</label><select id="demo_request" name="demo_request"><option value="">Unknown</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="purchase_intent">Purchase Intent</label><select id="purchase_intent" name="purchase_intent"><option value="">Not specified</option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select></div>
+                    <div class="form-group"><label for="budget">Budget</label><input type="text" id="budget" name="budget" placeholder="$50,000"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="lead_source">Lead Source</label><input type="text" id="lead_source" name="lead_source" placeholder="Website / LinkedIn / Referral"></div>
+                    <div class="form-group"><label for="campaign">Campaign</label><input type="text" id="campaign" name="campaign" placeholder="Q4 Campaign"></div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-full" id="scoreLeadBtn">
+                    <span class="btn-text">✨ Score This Lead</span>
+                    <span class="btn-loading hidden">⏳ Scoring...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Loading -->
+    <div class="ai-loading hidden" id="loadingState">
+        <div class="ai-loading-spinner"></div>
+        <div class="ai-loading-messages" id="loadingMessages"></div>
+    </div>
+
+    <!-- Results -->
+    <div id="leadResults" class="hidden">
+        <!-- Summary Cards -->
+        <div class="lead-summary" id="leadSummary"></div>
+        <!-- Lead Table -->
+        <div class="section-card">
+            <div class="section-card-header">
+                <h3 id="leadsTableTitle">Scored Leads</h3>
+                <div class="table-controls">
+                    <input type="text" id="leadSearch" placeholder="🔍 Search leads..." class="search-input">
+                    <select id="priorityFilter" class="filter-select">
+                        <option value="">All Priorities</option>
+                        <option value="High">🔥 High</option>
+                        <option value="Medium">⚡ Medium</option>
+                        <option value="Low">❄️ Low</option>
+                    </select>
+                    <button class="btn btn-ghost btn-sm" id="exportLeadsBtn">📥 Export CSV</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="leads-table" id="leadsTable">
+                    <thead>
+                        <tr>
+                            <th>Lead</th>
+                            <th>Company</th>
+                            <th>Industry</th>
+                            <th class="sortable" data-sort="lead_score">AI Score ↕</th>
+                            <th>Priority</th>
+                            <th>Est. Conversion</th>
+                            <th>Recommended Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsTableBody"></tbody>
+                </table>
+            </div>
+            <div class="pagination" id="leadsPagination"></div>
+        </div>
+        <!-- Batch Insights -->
+        <div class="section-card" id="batchInsightsCard" style="display:none">
+            <h3>AI Batch Insights</h3>
+            <div id="batchInsightsContent"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/lead_scoring.js') }}"></script>
+{% endblock %}
