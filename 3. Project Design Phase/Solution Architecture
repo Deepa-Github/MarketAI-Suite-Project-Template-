@@ -1,0 +1,116 @@
+
+                         ┌──────────────────────────────┐
+                         │          END USER            │
+                         │ Marketing / Sales / Business │
+                         └──────────────┬───────────────┘
+                                        │
+                                        ▼
+                    ┌─────────────────────────────────────┐
+                    │        PRESENTATION LAYER            │
+                    │                                     │
+                    │ HTML + CSS + JavaScript              │
+                    │ Responsive Web Dashboard             │
+                    │                                     │
+                    │ • Campaign Generator                 │
+                    │ • Sales Pitch Generator              │
+                    │ • Lead Scoring                        │
+                    │ • Customer Segmentation               │
+                    │ • History / Dashboard                │
+                    └─────────────────┬───────────────────┘
+                                      │
+                              REST API / JSON
+                                      │
+                                      ▼
+                    ┌─────────────────────────────────────┐
+                    │          FLASK BACKEND               │
+                    │            API LAYER                 │
+                    │                                     │
+                    │ • Request Handling                  │
+                    │ • Input Validation                   │
+                    │ • Authentication / Security          │
+                    │ • Error Handling                     │
+                    │ • Response Formatting                │
+                    └─────────────────┬───────────────────┘
+                                      │
+                                      ▼
+              ┌────────────────────────────────────────────────┐
+              │          MARKETAI INTELLIGENCE ENGINE          │
+              │                                                │
+              │ ┌────────────────────────────────────────────┐ │
+              │ │ AI Campaign Generator                     │ │
+              │ │ AI Sales Pitch Generator                  │ │
+              │ │ Lead Scoring & Prioritization              │ │
+              │ │ Customer Segmentation                      │ │
+              │ │ Marketing Strategy Generator               │ │
+              │ │ Recommendation Engine                      │ │
+              │ └──────────────────────┬─────────────────────┘ │
+              └─────────────────────────┼───────────────────────┘
+                                        │
+                                        ▼
+                         ┌──────────────────────────┐
+                         │     PROMPT ENGINEERING   │
+                         │                          │
+                         │ • System Prompts        │
+                         │ • Campaign Prompts      │
+                         │ • Sales Prompts         │
+                         │ • Lead Analysis Prompts │
+                         │ • Segmentation Prompts  │
+                         └────────────┬─────────────┘
+                                      │
+                                      ▼
+                         ┌──────────────────────────┐
+                         │       GROQ API            │
+                         │                          │
+                         │ LLaMA 3.3 70B            │
+                         │ llama-3.3-70b-versatile  │
+                         └────────────┬─────────────┘
+                                      │
+                                      │ AI Response
+                                      ▼
+                         ┌──────────────────────────┐
+                         │   AI RESPONSE PROCESSOR  │
+                         │                          │
+                         │ • Parse Response         │
+                         │ • Validate Output        │
+                         │ • Format Results         │
+                         │ • Prepare JSON            │
+                         └────────────┬─────────────┘
+                                      │
+                         ┌────────────┴─────────────┐
+                         │                          │
+                         ▼                          ▼
+                ┌──────────────────┐       ┌─────────────────────┐
+                │   DATA STORAGE   │       │  SESSION / HISTORY  │
+                │                  │       │                     │
+                │ SQLite Database  │◄─────►│ Previous Campaigns  │
+                │                  │       │ Sales Pitches       │
+                │ • Campaigns      │       │ Lead Analyses       │
+                │ • Leads          │       │ Strategies          │
+                │ • Scores         │       │ Recommendations     │
+                │ • Segments       │       └─────────────────────┘
+                │ • Strategies     │
+                │ • Recommendations│
+                └────────┬─────────┘
+                         │
+                         ▼
+                ┌──────────────────────┐
+                │ DASHBOARD & REPORTS  │
+                │                      │
+                │ • Campaign Results   │
+                │ • Lead Scores        │
+                │ • Priority Levels    │
+                │ • Insights           │
+                │ • History            │
+                │ • Reports            │
+                └──────────────────────┘
+
+
+       ┌────────────────────────────────────────────────────┐
+       │                 SECURITY LAYER                      │
+       │                                                    │
+       │ .env → GROQ_API_KEY                               │
+       │ .env → SECRET_KEY                                  │
+       │ Input Validation                                   │
+       │ Secure API Communication                           │
+       │ .gitignore                                         │
+       └────────────────────────────────────────────────────┘
